@@ -52,45 +52,8 @@ Heads Up! If you get an error here, run `psql postgres -c "CREATE ROLE postgres 
 
     > mix ecto.gen.migration create_albums
 
-Open the created migration and add:
+### 6. Add Demo.Album
 
-    def change do
-      create table(:albums) do
-        add :artist, :string, null: false
-        add :title, :string, null: false
-        add :rating, :integer, null: false
-        add :released_on, :date, null: false
-      end
-    end
+### 7. Add Demo.Album.Changeset
 
-Create a schema file under `lib/demo/album.ex`:
-
-    defmodule Demo.Album do
-      use Ecto.Schema
-
-      schema "albums" do
-        field :title, :string
-        field :artist, :string
-        field :rating, :integer
-        field :released_on, :date
-      end
-    end
-
-### 5. Add an Album Changeset
-
-    defmodule Demo.Album do
-      use Ecto.Schema
-
-      ...
-
-      defmodule Changeset do
-        import Ecto.Changeset
-
-        def new(album, params) do
-          album
-          |> cast(params, [:title, :artist, :rating, :released_on])
-          |> validate_required([:title, :artist, :rating, :released_on])
-          |> validate_number(:rating, greater_than: 0, less_than: 6)
-        end
-      end
-    end
+### 8. Add Demo.Album.Query

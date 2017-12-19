@@ -18,4 +18,19 @@ defmodule Demo.Album do
       |> validate_number(:rating, greater_than: 0, less_than: 6)
     end
   end
+
+  defmodule Query do
+    import Ecto.Query
+
+    def released_after(query \\ Demo.Album, date) do
+      from album in query,
+        where: album.released_on > ^date
+    end
+
+    def top_rated(query \\ Demo.Album, count) do
+      from album in query,
+        order_by: {:desc, album.rating},
+        limit: ^count
+    end
+  end
 end
