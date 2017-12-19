@@ -47,3 +47,31 @@ Update the repo config in `./config/config.exs`
     > mix ecto.create
 
 Heads Up! If you get an error here, run `psql postgres -c "CREATE ROLE postgres LOGIN CREATEDB;"`
+
+### 5. Create our first table
+
+    > mix ecto.gen.migration create_albums
+
+Open the created migration and add:
+
+    def change do
+      create table(:albums) do
+        add :artist, :string, null: false
+        add :title, :string, null: false
+        add :rating, :integer, null: false
+        add :released_on, :date, null: false
+      end
+    end
+
+Create a schema file under `lib/demo/album.ex`:
+
+    defmodule Demo.Album do
+      use Ecto.Schema
+
+      schema "albums" do
+        field :title, :string
+        field :artist, :string
+        field :rating, :integer
+        field :released_on, :date
+      end
+    end
