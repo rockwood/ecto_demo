@@ -6,6 +6,8 @@ defmodule Demo.Album do
     field :artist, :string
     field :rating, :integer
     field :released_on, :date
+
+    has_many :tracks, Demo.Track
   end
 
   defmodule Changeset do
@@ -14,6 +16,7 @@ defmodule Demo.Album do
     def new(album, params) do
       album
       |> cast(params, [:title, :artist, :rating, :released_on])
+      |> cast_assoc(:tracks, with: &Demo.Track.Changeset.new/2)
       |> validate_required([:title, :artist, :rating, :released_on])
       |> validate_number(:rating, greater_than: 0, less_than: 6)
     end
