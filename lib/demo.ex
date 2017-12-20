@@ -1,18 +1,9 @@
 defmodule Demo do
-  @moduledoc """
-  Documentation for Demo.
-  """
+  def to_sql(query) do
+    Ecto.Adapters.SQL.to_sql(:all, Demo.Repo, query)
+  end
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Demo.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def query_raw(sql, variables \\ []) do
+    Ecto.Adapters.SQL.query(Demo.Repo, sql, variables)
   end
 end
